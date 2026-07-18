@@ -60,9 +60,9 @@ const SERVER_FALLBACK_PROFILE: Profile = {
 
 export const usePrepArenaStore = create<PrepArenaState>((set, get) => ({
   profile: typeof window !== 'undefined' ? clientDb.getProfile() : SERVER_FALLBACK_PROFILE,
-  problems: MOCK_PROBLEMS,
+  problems: typeof window !== 'undefined' ? clientDb.getProblems() : MOCK_PROBLEMS,
   subjects: MOCK_SUBJECTS,
-  chapters: MOCK_CHAPTERS,
+  chapters: typeof window !== 'undefined' ? clientDb.getChapters() : MOCK_CHAPTERS,
   submissions: typeof window !== 'undefined' ? clientDb.getSubmissions() : [],
   achievements: MOCK_ACHIEVEMENTS,
   userAchievements: typeof window !== 'undefined' ? clientDb.getUserAchievements() : [],
@@ -72,6 +72,8 @@ export const usePrepArenaStore = create<PrepArenaState>((set, get) => ({
   refreshState: () => {
     set({
       profile: clientDb.getProfile(),
+      problems: typeof window !== 'undefined' ? clientDb.getProblems() : MOCK_PROBLEMS,
+      chapters: typeof window !== 'undefined' ? clientDb.getChapters() : MOCK_CHAPTERS,
       submissions: clientDb.getSubmissions(),
       userAchievements: clientDb.getUserAchievements(),
       leaderboard: clientDb.getLeaderboard()

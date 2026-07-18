@@ -36,6 +36,7 @@ export interface Chapter {
   order_index: number;
   syllabus_reference: string;
   created_at: string;
+  topics?: string[];
 }
 
 export interface MCQOption {

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { usePrepArenaStore } from '@/lib/store';
 import { clientDb } from '@/lib/supabase/client';
 import { Problem } from '@/lib/supabase/types';
@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { toast } from 'sonner';
+import { toPng } from 'html-to-image';
 
 interface GradedExam {
   id: string;
@@ -46,6 +47,34 @@ export default function MockExamResultsPage({ params }: { params: { examId: stri
   const [exam, setExam] = useState<GradedExam | null>(null);
   const [loading, setLoading] = useState(true);
   const [expandedProblemId, setExpandedProblemId] = useState<string | null>(null);
+  const scorecardRef = useRef<HTMLDivElement>(null);
+  const [isExporting, setIsExporting] = useState(false);
+
+  const handleExportPNG = async () => {
+    if (!scorecardRef.current || !exam) return;
+    setIsExporting(true);
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 150));
+      const dataUrl = await toPng(scorecardRef.current, {
+        cacheBust: true,
+        style: {
+          transform: 'scale(1)',
+          borderRadius: '24px',
+        },
+        backgroundColor: '#0B0F19',
+      });
+      const link = document.createElement('a');
+      link.download = `PrepArena_MockExam_${exam.id.slice(0, 8)}.png`;
+      link.href = dataUrl;
+      link.click();
+      toast.success('PNG scorecard downloaded!');
+    } catch (err) {
+      console.error(err);
+      toast.error('Failed to generate scorecard image.');
+    } finally {
+      setIsExporting(false);
+    }
+  };
 
   useEffect(() => {
     // Load mock exam from local clientDb
@@ -164,6 +193,19 @@ export default function MockExamResultsPage({ params }: { params: { examId: stri
             <span>Share Score</span>
           </button>
 
+          <button
+            onClick={handleExportPNG}
+            disabled={isExporting}
+            className="flex items-center gap-1.5 rounded-xl border border-amberGold/30 bg-amberGold/15 hover:bg-amberGold/20 disabled:opacity-50 px-4 py-2.5 font-space text-xs font-black text-amberGold transition-colors cursor-pointer"
+          >
+            {isExporting ? (
+              <span className="h-3 w-3 animate-spin rounded-full border border-solid border-current border-r-transparent"></span>
+            ) : (
+              <Sparkles size={14} className="text-amberGold" />
+            )}
+            <span>{isExporting ? 'Generating...' : 'Download PNG'}</span>
+          </button>
+
           <Link
             href="/dashboard/mock-exam"
             className="flex items-center gap-1.5 rounded-xl bg-primary text-white hover:bg-primary-hover px-4 py-2.5 font-space text-xs font-bold transition-all shadow-glow hover:-translate-y-0.5"
@@ -175,7 +217,7 @@ export default function MockExamResultsPage({ params }: { params: { examId: stri
       </div>
 
       {/* Aggregate Score Card */}
-      <div className="relative overflow-hidden rounded-3xl border border-borderColor bg-gradient-to-r from-bgSecondary to-bgTertiary/40 p-6 md:p-8 shadow-glow space-y-6">
+      <div ref={scorecardRef} className="relative overflow-hidden rounded-3xl border border-borderColor bg-gradient-to-r from-bgSecondary to-bgTertiary/40 p-6 md:p-8 shadow-glow space-y-6">
         
         {/* Glow rings */}
         <div className="absolute -top-24 -right-24 h-48 w-48 rounded-full bg-primary/20 blur-3xl -z-10 animate-pulse"></div>

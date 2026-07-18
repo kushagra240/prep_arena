@@ -690,5 +690,30 @@ export const clientDb = {
     const filteredExams = exams.filter(e => e.id !== exam.id);
     filteredExams.push(exam);
     localStorage.setItem('prep_arena_mock_exams', JSON.stringify(filteredExams));
+  },
+
+  getProblems: (): Problem[] => {
+    return getLocalStorageData('preparena_problems', MOCK_PROBLEMS);
+  },
+
+  saveProblems: (problems: Problem[]): void => {
+    setLocalStorageData('preparena_problems', problems);
+  },
+
+  getChapters: (): Chapter[] => {
+    const chapters = getLocalStorageData('preparena_chapters', MOCK_CHAPTERS);
+    return chapters.map((ch: any) => {
+      if (!ch.topics) {
+        if (ch.id === 'ch-math-1') ch.topics = ['GST on goods/services', 'Maturity value of RD', 'Shares & Dividends yield'];
+        else if (ch.id === 'ch-phy-1') ch.topics = ['Turning effect of force', 'Center of gravity', 'Uniform circular motion'];
+        else if (ch.id === 'ch-che-1') ch.topics = ['Periodic trends', 'Ionization potential', 'Electronegativity'];
+        else ch.topics = ['Introduction & Basics', 'Key concepts', 'Example applications'];
+      }
+      return ch;
+    });
+  },
+
+  saveChapters: (chapters: Chapter[]): void => {
+    setLocalStorageData('preparena_chapters', chapters);
   }
 };
