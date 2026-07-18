@@ -1,0 +1,62 @@
+[
+  {
+    "name": "Force",
+    "description": "Turning effect of force, torque, center of gravity, uniform circular motion, and centripetal/centrifugal forces.",
+    "syllabus_reference": "ICSE-PHY-01",
+    "order_index": 1
+  },
+  {
+    "name": "Work, Power & Energy",
+    "description": "Work done, energy forms, potential/kinetic energy, conservation of energy.",
+    "syllabus_reference": "ICSE-PHY-02",
+    "order_index": 2
+  },
+  {
+    "name": "Machines",
+    "description": "Levers, pulley systems, mechanical advantage, velocity ratio, and efficiency.",
+    "syllabus_reference": "ICSE-PHY-03",
+    "order_index": 3
+  },
+  {
+    "name": "Refraction of Light & Lenses",
+    "description": "Refraction through glass block, prism, critical angle, total internal reflection, convex and concave lenses.",
+    "syllabus_reference": "ICSE-PHY-04",
+    "order_index": 4
+  },
+  {
+    "name": "Spectrum",
+    "description": "Dispersion of light, electromagnetic spectrum, properties and uses of different radiations.",
+    "syllabus_reference": "ICSE-PHY-05",
+    "order_index": 5
+  },
+  {
+    "name": "Sound",
+    "description": "Free, forced, and resonant vibrations, echo, sonar, loudness, pitch, and quality of sound.",
+    "syllabus_reference": "ICSE-PHY-06",
+    "order_index": 6
+  },
+  {
+    "name": "Current Electricity",
+    "description": "Ohm's Law, resistance, factors affecting resistance, series and parallel circuits, EMF, internal resistance.",
+    "syllabus_reference": "ICSE-PHY-07",
+    "order_index": 7
+  },
+  {
+    "name": "Household Circuits",
+    "description": "Three-wire system, main switch, fuse, earthing, two-way switch, and power calculations.",
+    "syllabus_reference": "ICSE-PHY-08",
+    "order_index": 8
+  },
+  {
+    "name": "Electromagnetism",
+    "description": "Magnetic effect of current, solenoid, electromagnet, force on a conductor, DC motor, electromagnetic induction, AC generator, and transformer.",
+    "syllabus_reference": "ICSE-PHY-09",
+    "order_index": 9
+  },
+  {
+    "name": "Modern Physics & Radioactivity",
+    "description": "Structure of atom, radioactivity, alpha, beta, gamma radiations, background radiation, nuclear fission, and fusion.",
+    "syllabus_reference": "ICSE-PHY-10",
+    "order_index": 10
+  }
+]

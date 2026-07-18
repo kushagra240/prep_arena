@@ -1,0 +1,74 @@
+[
+  {
+    "name": "Periodic Properties & Variations",
+    "description": "Periodic table, group-wise trends, ionization energy, electron affinity, electronegativity, atomic size.",
+    "syllabus_reference": "ICSE-CHE-01",
+    "order_index": 1
+  },
+  {
+    "name": "Chemical Bonding",
+    "description": "Electrovalent, covalent, and coordinate bonding, electron dot structures.",
+    "syllabus_reference": "ICSE-CHE-02",
+    "order_index": 2
+  },
+  {
+    "name": "Acids, Bases & Salts",
+    "description": "Properties, pH scale, indicators, preparation and classification of salts.",
+    "syllabus_reference": "ICSE-CHE-03",
+    "order_index": 3
+  },
+  {
+    "name": "Analytical Chemistry",
+    "description": "Action of ammonium hydroxide and sodium hydroxide on salt solutions.",
+    "syllabus_reference": "ICSE-CHE-04",
+    "order_index": 4
+  },
+  {
+    "name": "Mole Concept & Stoichiometry",
+    "description": "Gay Lussac's Law, Avogadro's Law, relative molecular mass, empirical and molecular formula calculations.",
+    "syllabus_reference": "ICSE-CHE-05",
+    "order_index": 5
+  },
+  {
+    "name": "Electrolysis",
+    "description": "Electrochemical series, electrolysis of molten lead bromide, acidified water, copper sulfate using active/inert electrodes.",
+    "syllabus_reference": "ICSE-CHE-06",
+    "order_index": 6
+  },
+  {
+    "name": "Metallurgy",
+    "description": "Extraction of Aluminium (Hall-Heroult process), alloys, common ores.",
+    "syllabus_reference": "ICSE-CHE-07",
+    "order_index": 7
+  },
+  {
+    "name": "Study of Compounds: Hydrogen Chloride",
+    "description": "Laboratory preparation, fountain experiment, properties, and tests for HCl.",
+    "syllabus_reference": "ICSE-CHE-08",
+    "order_index": 8
+  },
+  {
+    "name": "Study of Compounds: Ammonia",
+    "description": "Haber's process, laboratory preparation, fountain experiment, properties and uses of NH3.",
+    "syllabus_reference": "ICSE-CHE-09",
+    "order_index": 9
+  },
+  {
+    "name": "Study of Compounds: Nitric Acid",
+    "description": "Ostwald's process, laboratory preparation, oxidizing properties of HNO3.",
+    "syllabus_reference": "ICSE-CHE-10",
+    "order_index": 10
+  },
+  {
+    "name": "Study of Compounds: Sulphuric Acid",
+    "description": "Contact process, dehydrating agent properties, oxidizing agent properties.",
+    "syllabus_reference": "ICSE-CHE-11",
+    "order_index": 11
+  },
+  {
+    "name": "Organic Chemistry",
+    "description": "Alkanes, Alkenes, Alkynes, functional groups (alcohol, aldehyde, carboxylic acid), nomenclature, and preparation.",
+    "syllabus_reference": "ICSE-CHE-12",
+    "order_index": 12
+  }
+]

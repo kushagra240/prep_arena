@@ -1,0 +1,108 @@
+import React from 'react';
+import Link from 'next/link';
+import { SubjectBadge } from '../shared/SubjectBadge';
+import { DifficultyBadge } from '../shared/DifficultyBadge';
+import { XPCounter } from '../shared/XPCounter';
+import { Problem } from '@/lib/supabase/types';
+import { usePrepArenaStore } from '@/lib/store';
+import { CheckCircle2, CircleDot, HelpCircle, FileText, ClipboardList } from 'lucide-react';
+
+interface ProblemCardProps {
+  problem: Problem;
+  index: number;
+}
+
+export function ProblemCard({ problem, index }: ProblemCardProps) {
+  const submissions = usePrepArenaStore((state) => state.submissions);
+  const subjects = usePrepArenaStore((state) => state.subjects);
+  const chapters = usePrepArenaStore((state) => state.chapters);
+
+  const subject = subjects.find(s => s.id === problem.subject_id);
+  const chapter = chapters.find(c => c.id === problem.chapter_id);
+
+  // Solved status
+  const solvedSub = submissions.find(s => s.problem_id === problem.id && s.is_correct);
+  const attemptedSub = submissions.find(s => s.problem_id === problem.id);
+  
+  const status: 'solved' | 'attempted' | 'unsolved' = solvedSub 
+    ? 'solved' 
+    : attemptedSub 
+    ? 'attempted' 
+    : 'unsolved';
+
+  // Calculate mock acceptance rate
+  const acceptance = problem.total_attempts > 0 
+    ? Math.round((problem.total_correct / problem.total_attempts) * 100)
+    : 75;
+
+  return (
+    <div className="glass-panel-hover flex flex-col sm:flex-row sm:items-center justify-between rounded-xl border border-borderColor bg-bgSecondary/40 p-4 sm:p-5 gap-4">
+      {/* Title + Index + Status */}
+      <div className="flex items-start gap-3">
+        <span className="mt-1 shrink-0">
+          {status === 'solved' ? (
+            <CheckCircle2 className="h-5 w-5 text-correct fill-correct/10" />
+          ) : status === 'attempted' ? (
+            <CircleDot className="h-5 w-5 text-amberGold" />
+          ) : (
+            <span className="block h-5 w-5 rounded-full border border-borderColor bg-bgPrimary"></span>
+          )}
+        </span>
+        
+        <div className="space-y-1">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="font-mono text-xs text-textMuted font-bold">#{index}</span>
+            <Link 
+              href={`/problems/${problem.slug}`}
+              className="font-space text-sm font-bold text-white hover:text-primary hover:underline transition-all"
+            >
+              {problem.title}
+            </Link>
+
+            {problem.is_board_question && problem.icse_year && (
+              <span className="inline-flex items-center rounded-md bg-amberGold/15 border border-amberGold/40 px-2 py-0.5 text-[9px] font-bold font-space text-amberGold uppercase tracking-widest animate-pulse-glow">
+                ICSE Board {problem.icse_year}
+              </span>
+            )}
+          </div>
+
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+            <span className="font-space text-xs text-textSecondary">{chapter?.name || 'Syllabus Chapter'}</span>
+            <span className="h-1.5 w-1.5 rounded-full bg-borderColor"></span>
+            <span className="font-space text-xs text-textMuted flex items-center gap-1">
+              {problem.problem_type === 'mcq' ? (
+                <>
+                  <ClipboardList size={12} className="text-primary" />
+                  <span>MCQ</span>
+                </>
+              ) : (
+                <>
+                  <FileText size={12} className="text-amberGold" />
+                  <span>Brief Essay</span>
+                </>
+              )}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {/* Badges + Metrics + XP */}
+      <div className="flex flex-wrap items-center justify-between sm:justify-end gap-3.5 border-t border-borderColor/40 pt-3 sm:border-0 sm:pt-0">
+        {/* Subject tag */}
+        <SubjectBadge subjectId={problem.subject_id} />
+
+        {/* Difficulty */}
+        <DifficultyBadge difficulty={problem.difficulty} />
+
+        {/* Acceptance rate */}
+        <div className="flex flex-col items-end hidden lg:flex font-space min-w-[70px]">
+          <span className="text-[11px] font-bold text-white">{acceptance}%</span>
+          <span className="text-[9px] font-semibold text-textMuted uppercase tracking-wider">Acceptance</span>
+        </div>
+
+        {/* XP counter */}
+        <XPCounter xp={problem.xp_reward} size="sm" />
+      </div>
+    </div>
+  );
+}

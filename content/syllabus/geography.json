@@ -1,0 +1,50 @@
+[
+  {
+    "name": "Interpretation of Topographical Maps",
+    "description": "Grid reference, scale, contours, physical features, drainage, settlement patterns.",
+    "syllabus_reference": "ICSE-GEO-01",
+    "order_index": 1
+  },
+  {
+    "name": "Climate of India",
+    "description": "Monsoon seasons, temperature and rainfall distribution, factors affecting India's climate.",
+    "syllabus_reference": "ICSE-GEO-02",
+    "order_index": 2
+  },
+  {
+    "name": "Soils in India",
+    "description": "Alluvial, Black, Red, and Laterite soils - formation, characteristics, distribution, soil erosion and conservation.",
+    "syllabus_reference": "ICSE-GEO-03",
+    "order_index": 3
+  },
+  {
+    "name": "Natural Vegetation & Water Resources",
+    "description": "Tropical evergreen, deciduous, thorny, littoral forest types; irrigation methods (canals, tube wells, tanks) and rainwater harvesting.",
+    "syllabus_reference": "ICSE-GEO-04",
+    "order_index": 4
+  },
+  {
+    "name": "Minerals and Energy Resources",
+    "description": "Iron ore, manganese, copper, bauxite; coal, petroleum, natural gas, hydel, solar, wind energy.",
+    "syllabus_reference": "ICSE-GEO-05",
+    "order_index": 5
+  },
+  {
+    "name": "Agriculture in India",
+    "description": "Food crops (rice, wheat), cash crops (sugar cane, cotton), tea, coffee - climate requirements and distribution.",
+    "syllabus_reference": "ICSE-GEO-06",
+    "order_index": 6
+  },
+  {
+    "name": "Manufacturing Industries in India",
+    "description": "Agro-based (sugar, textile) and mineral-based (iron & steel, petrochemical) industries.",
+    "syllabus_reference": "ICSE-GEO-07",
+    "order_index": 7
+  },
+  {
+    "name": "Transport & Waste Management",
+    "description": "Roadways, Railways, Airways, Waterways advantages; types of waste, impact, safe disposal, and recycling.",
+    "syllabus_reference": "ICSE-GEO-08",
+    "order_index": 8
+  }
+]

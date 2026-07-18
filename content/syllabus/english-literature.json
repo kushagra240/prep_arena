@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Poetry: Ozymandias & The Patriot",
+    "description": "Analysis of themes, symbols, and literary devices in Percy Bysshe Shelley's Ozymandias and Robert Browning's The Patriot.",
+    "syllabus_reference": "ICSE-LIT-01",
+    "order_index": 1
+  },
+  {
+    "name": "Poetry: Nine Gold Medals & Daffodils",
+    "description": "In-depth study of David Roth's Nine Gold Medals and William Wordsworth's Daffodils, focusing on empathy, human spirit, and nature.",
+    "syllabus_reference": "ICSE-LIT-02",
+    "order_index": 2
+  },
+  {
+    "name": "Prose: Chief Seattle's Speech",
+    "description": "Historical context, environmental messages, and style analysis of Chief Seattle's famous 1854 speech.",
+    "syllabus_reference": "ICSE-LIT-03",
+    "order_index": 3
+  },
+  {
+    "name": "Prose: The Hearts and Hands & A Face in the Dark",
+    "description": "Detailed look at O. Henry's twist ending in Hearts and Hands and Ruskin Bond's supernatural elements in A Face in the Dark.",
+    "syllabus_reference": "ICSE-LIT-04",
+    "order_index": 4
+  },
+  {
+    "name": "Drama: The Merchant of Venice Act I & II",
+    "description": "Character study of Antonio, Bassanio, Portia, and Shylock. Understanding the bond story and casket test.",
+    "syllabus_reference": "ICSE-LIT-05",
+    "order_index": 5
+  },
+  {
+    "name": "Drama: The Merchant of Venice Act III, IV & V",
+    "description": "Analyzing the trial scene, mercy speech, and ring resolution.",
+    "syllabus_reference": "ICSE-LIT-06",
+    "order_index": 6
+  }
+]

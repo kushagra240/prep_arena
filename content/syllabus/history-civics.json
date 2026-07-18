@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Civics: The Union Legislature",
+    "description": "The Lok Sabha and Rajya Sabha - qualifications, term, sessions, officers, and powers.",
+    "syllabus_reference": "ICSE-HIS-01",
+    "order_index": 1
+  },
+  {
+    "name": "Civics: The Union Executive",
+    "description": "The President (election, powers), Vice-President, Prime Minister, and Council of Ministers.",
+    "syllabus_reference": "ICSE-HIS-02",
+    "order_index": 2
+  },
+  {
+    "name": "Civics: The Supreme Court & High Courts",
+    "description": "Composition, qualifications, jurisdiction (original, appellate, advisory, writ), and judicial review.",
+    "syllabus_reference": "ICSE-HIS-03",
+    "order_index": 3
+  },
+  {
+    "name": "History: First War of Independence & Growth of Nationalism",
+    "description": "Causes and consequences of the 1857 revolt; rise of nationalism and early nationalists.",
+    "syllabus_reference": "ICSE-HIS-04",
+    "order_index": 4
+  },
+  {
+    "name": "History: The Indian National Movement (1915-1947)",
+    "description": "Mahatma Gandhi's leadership, Non-Cooperation, Civil Disobedience, Quit India, Forward Bloc, and Partition.",
+    "syllabus_reference": "ICSE-HIS-05",
+    "order_index": 5
+  },
+  {
+    "name": "History: The World Wars & The UN",
+    "description": "Causes of WWI & WWII; Rise of Dictatorships (Fascism, Nazism); United Nations structures and objectives.",
+    "syllabus_reference": "ICSE-HIS-06",
+    "order_index": 6
+  }
+]

@@ -1,0 +1,62 @@
+[
+  {
+    "name": "Cell Division & Structure of Chromosomes",
+    "description": "Mitosis and Meiosis phases, chromosome structure, DNA double helix basic concept.",
+    "syllabus_reference": "ICSE-BIO-01",
+    "order_index": 1
+  },
+  {
+    "name": "Genetics: Mendel's Laws",
+    "description": "Monohybrid and dihybrid crosses, sex-linked inheritance (haemophilia, color blindness).",
+    "syllabus_reference": "ICSE-BIO-02",
+    "order_index": 2
+  },
+  {
+    "name": "Absorption by Roots",
+    "description": "Imbibition, diffusion, osmosis, turgidity, plasmolysis, active transport, and root hair structure.",
+    "syllabus_reference": "ICSE-BIO-03",
+    "order_index": 3
+  },
+  {
+    "name": "Transpiration",
+    "description": "Mechanism, stomatal and cuticular transpiration, factors affecting rate, Ganong's potometer.",
+    "syllabus_reference": "ICSE-BIO-04",
+    "order_index": 4
+  },
+  {
+    "name": "Photosynthesis",
+    "description": "Light and Dark reactions, factors, carbon cycle, experiments demonstrating necessity of light, CO2, chlorophyll.",
+    "syllabus_reference": "ICSE-BIO-05",
+    "order_index": 5
+  },
+  {
+    "name": "Chemical Coordination: Endocrine System",
+    "description": "Hormones from Adrenal, Thyroid, Pituitary, and Pancreas. Hypo and hyper-secretion states.",
+    "syllabus_reference": "ICSE-BIO-06",
+    "order_index": 6
+  },
+  {
+    "name": "Circulatory System",
+    "description": "Structure of heart, double circulation, blood vessels, composition of blood and lymph, clotting mechanism.",
+    "syllabus_reference": "ICSE-BIO-07",
+    "order_index": 7
+  },
+  {
+    "name": "Excretory System",
+    "description": "Structure of kidney, nephron, urine formation, ultrafiltration, selective reabsorption, and osmoregulation.",
+    "syllabus_reference": "ICSE-BIO-08",
+    "order_index": 8
+  },
+  {
+    "name": "Nervous System",
+    "description": "Brain structures (cerebrum, cerebellum, medulla oblongata), spinal cord, reflex arc, and structure of eye and ear.",
+    "syllabus_reference": "ICSE-BIO-09",
+    "order_index": 9
+  },
+  {
+    "name": "Reproductive System & Population",
+    "description": "Male and female systems, menstrual cycle, fertilization, population explosion, control methods.",
+    "syllabus_reference": "ICSE-BIO-10",
+    "order_index": 10
+  }
+]
