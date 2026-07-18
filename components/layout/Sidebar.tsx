@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { usePrepArenaStore } from '@/lib/store';
 import { getLevelInfo } from '@/lib/utils/xp';
+import { useUser } from '@clerk/nextjs';
 import { 
   LayoutDashboard, 
   BookOpen, 
@@ -12,13 +13,17 @@ import {
   Settings, 
   GraduationCap,
   BarChart2,
-  Copy
+  Copy,
+  Shield
 } from 'lucide-react';
 
 export function Sidebar() {
   const pathname = usePathname();
+  const { user } = useUser();
   const profile = usePrepArenaStore((state) => state.profile);
   const levelInfo = getLevelInfo(profile.xp || 0);
+
+  const isAdmin = user?.publicMetadata?.role === 'admin' || user?.username === 'admin';
 
   const menuItems = [
     { name: 'Dashboard', icon: LayoutDashboard, href: '/dashboard' },
@@ -30,6 +35,10 @@ export function Sidebar() {
     { name: 'Profile', icon: User, href: `/profile/${profile.username || 'kushagra_icse'}` },
     { name: 'Settings', icon: Settings, href: '/dashboard/settings' },
   ];
+
+  if (isAdmin) {
+    menuItems.push({ name: 'Admin Panel', icon: Shield, href: '/admin' });
+  }
 
   return (
     <aside className="fixed inset-y-0 left-0 z-20 hidden w-64 border-r border-borderColor bg-bgSecondary md:flex md:flex-col">
