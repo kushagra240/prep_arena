@@ -523,6 +523,12 @@ export const clientDb = {
       xpEarned += 5; // First solve bonus
     }
 
+    // Apply Daily Challenge 2x XP Multiplier
+    const dailyChallengeId = typeof window !== 'undefined' ? localStorage.getItem('preparena_daily_challenge_id') : null;
+    const isDailyChallenge = problemId === dailyChallengeId;
+    const xpMultiplier = isDailyChallenge ? 2 : 1;
+    xpEarned = xpEarned * xpMultiplier;
+
     // Create Submission
     const submission: Submission = {
       id: `sub-${Math.random().toString(36).substr(2, 9)}`,

@@ -10,7 +10,9 @@ import {
   Trophy, 
   User, 
   Settings, 
-  GraduationCap
+  GraduationCap,
+  BarChart2,
+  Copy
 } from 'lucide-react';
 
 export function Sidebar() {
@@ -23,6 +25,8 @@ export function Sidebar() {
     { name: 'Problems', icon: BookOpen, href: '/problems' },
     { name: 'Subjects', icon: Layers, href: '/subjects' },
     { name: 'Leaderboard', icon: Trophy, href: '/leaderboard' },
+    { name: 'Analytics', icon: BarChart2, href: '/analytics' },
+    { name: 'Flashcards', icon: Copy, href: '/flashcards' },
     { name: 'Profile', icon: User, href: `/profile/${profile.username || 'kushagra_icse'}` },
     { name: 'Settings', icon: Settings, href: '/dashboard/settings' },
   ];

@@ -6,9 +6,10 @@ import { MCQSolver } from '@/components/problems/MCQSolver';
 import { BriefWritingSolver } from '@/components/problems/BriefWritingSolver';
 import { AIExplanationPanel } from '@/components/problems/AIExplanationPanel';
 import { DifficultyBadge } from '@/components/shared/DifficultyBadge';
-import { ArrowLeft, Loader2 } from 'lucide-react';
+import { ArrowLeft, Loader2, Share2 } from 'lucide-react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { toast } from 'sonner';
 
 export function ProblemSolvingClient({ slug }: { slug: string }) {
   const problems = usePrepArenaStore((state) => state.problems);
@@ -96,6 +97,18 @@ export function ProblemSolvingClient({ slug }: { slug: string }) {
                 ICSE {problem.icse_year}
               </span>
             )}
+
+            <button
+              onClick={() => {
+                const shareUrl = `${window.location.origin}/problems/${problem.slug}`;
+                navigator.clipboard.writeText(shareUrl);
+                toast.success('Problem link copied to clipboard!');
+              }}
+              className="inline-flex items-center gap-1 hover:text-white rounded bg-bgPrimary border border-borderColor hover:border-primary/80 px-2.5 py-0.5 text-[10px] font-bold font-space text-textSecondary transition-all cursor-pointer"
+            >
+              <Share2 size={11} />
+              Share
+            </button>
           </div>
 
           {/* Problem Title */}
@@ -128,6 +141,25 @@ export function ProblemSolvingClient({ slug }: { slug: string }) {
             </div>
           )}
 
+          {/* Challenge a Friend Box */}
+          {submissions.some(s => s.problem_id === problem.id && s.is_correct) && (
+            <div className="border-t border-borderColor/40 pt-4 flex flex-col sm:flex-row items-center justify-between gap-3 bg-primary/5 p-4 rounded-xl border border-primary/20 animate-fade-in">
+              <div className="space-y-0.5 text-left">
+                <span className="block font-space text-[10px] font-extrabold text-primary uppercase tracking-wider">Problem Mastered</span>
+                <span className="block font-space text-[11px] text-textSecondary">Challenge your classmates to solve this question!</span>
+              </div>
+              <button
+                onClick={() => {
+                  const text = `🎯 I just solved "${problem.title}" (${problem.difficulty} level) on PrepArena! Can you solve it too? Try here: ${window.location.origin}/problems/${problem.slug}`;
+                  navigator.clipboard.writeText(text);
+                  toast.success('Challenge text copied! Share it with friends.');
+                }}
+                className="w-full sm:w-auto px-4 py-2 bg-primary hover:bg-primary-hover text-white rounded-xl font-space text-xs font-bold transition-all cursor-pointer"
+              >
+                Challenge Friend 🎯
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Right Column: Interactive Solvers */}

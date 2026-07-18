@@ -8,6 +8,7 @@ import { ActivityCalendar } from '@/components/dashboard/ActivityCalendar';
 import { SubjectProgress } from '@/components/dashboard/SubjectProgress';
 import { RecentActivity } from '@/components/dashboard/RecentActivity';
 import { LeaderboardMiniWidget } from '@/components/leaderboard/LeaderboardMiniWidget';
+import { DailyChallengeWidget } from '@/components/dashboard/DailyChallengeWidget';
 import { SubjectBadge } from '@/components/shared/SubjectBadge';
 import { DifficultyBadge } from '@/components/shared/DifficultyBadge';
 import { Award, Flame, Sparkles, BookOpen, ChevronRight, Zap, Target, Timer } from 'lucide-react';
@@ -184,43 +185,7 @@ export default function DashboardPage() {
       <div className="space-y-6">
         
         {/* Today's featured challenge */}
-        <div className="relative overflow-hidden rounded-2xl border border-amberGold/30 bg-gradient-to-b from-bgSecondary to-amberGold/5 p-5 shadow-amberGlow">
-          <div className="absolute top-0 right-0 rounded-bl-xl bg-amberGold/15 border-l border-b border-amberGold/40 px-3 py-1 font-space text-[9px] font-extrabold text-amberGold uppercase tracking-widest animate-pulse">
-            Today's Challenge
-          </div>
-          
-          <div className="space-y-4 mt-2">
-            <div className="space-y-1.5">
-              <div className="flex items-center gap-1.5">
-                <SubjectBadge subjectId={todaysChallenge.subject_id} />
-                <DifficultyBadge difficulty={todaysChallenge.difficulty} />
-              </div>
-              <h3 className="font-space text-base font-extrabold text-white leading-tight">
-                {todaysChallenge.title}
-              </h3>
-              <p className="font-lora text-xs text-textSecondary leading-relaxed line-clamp-3">
-                {todaysChallenge.question_text}
-              </p>
-            </div>
-
-            <div className="flex items-center justify-between border-t border-borderColor/40 pt-3">
-              <div className="font-space text-left">
-                <span className="block text-[8px] text-textMuted uppercase font-bold">Reward</span>
-                <span className="block text-xs font-black text-amberGold flex items-center gap-0.5">
-                  <Zap size={12} className="fill-amberGold" />
-                  <span>+{todaysChallenge.xp_reward + 10} XP</span>
-                </span>
-              </div>
-
-              <Link 
-                href={`/problems/${todaysChallenge.slug}`}
-                className="rounded-xl bg-amberGold text-bgPrimary hover:bg-amber-500 hover:shadow-[0_0_15px_rgba(245,158,11,0.3)] px-4 py-2 font-space text-xs font-black uppercase tracking-wider transition-all duration-300 hover:-translate-y-0.5"
-              >
-                Solve Now
-              </Link>
-            </div>
-          </div>
-        </div>
+        <DailyChallengeWidget />
 
         {/* Global mini widget rank leaderboard */}
         <LeaderboardMiniWidget />
