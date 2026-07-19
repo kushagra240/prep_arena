@@ -8,6 +8,7 @@ import { DifficultyBadge } from '@/components/shared/DifficultyBadge';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Zap, HelpCircle, Layers, CheckCircle2, ChevronRight, Check, AlertTriangle, ArrowLeft } from 'lucide-react';
 import { toast } from 'sonner';
+import Link from 'next/link';
 
 interface FlashcardProgress {
   problemId: string;
@@ -219,6 +220,10 @@ export default function FlashcardsPage() {
     }
     const tagsStr = card.tags ? card.tags.join(', ') : 'this topic';
     return `This question is from the chapter: "${card.chapter_id ? chapters.find(c => c.id === card.chapter_id)?.name : 'general'}". Practice solving similar problems to master ${tagsStr}.`;
+  };
+
+  const getFrontText = (card: any) => {
+    return card.question_text || '';
   };
 
   return (
@@ -539,7 +544,7 @@ export default function FlashcardsPage() {
 
           <div className="space-y-1">
             <h2 className="font-space text-xl font-black text-white uppercase tracking-wider">Deck Complete!</h2>
-            <p className="font-space text-xs text-textSecondary">You've successfully completed the review session.</p>
+            <p className="font-space text-xs text-textSecondary">You&apos;ve successfully completed the review session.</p>
           </div>
 
           <div className="grid grid-cols-2 gap-3 border-y border-borderColor/60 py-5 my-4">

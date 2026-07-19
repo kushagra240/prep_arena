@@ -85,7 +85,7 @@ export default function DashboardPage() {
                 Welcome back, {profile.full_name?.split(' ')[0] || 'Scholar'}!
               </h2>
               <p className="font-space text-xs text-textSecondary max-w-md leading-relaxed">
-                You are currently in the top <strong className="text-primary">{topPercent}%</strong> of all Class 10 candidates. Solve today's physical or computer questions to keep your streak!
+                You are currently in the top <strong className="text-primary">{topPercent}%</strong> of all Class 10 candidates. Solve today&apos;s physical or computer questions to keep your streak!
               </p>
             </div>
 

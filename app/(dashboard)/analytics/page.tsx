@@ -481,7 +481,7 @@ export default function AnalyticsPage() {
 
           {mockTrendData.length === 0 ? (
             <div className="h-56 flex flex-col items-center justify-center text-center font-space text-xs text-textMuted gap-3">
-              <span>You haven't completed any mock exams yet.</span>
+              <span>You haven&apos;t completed any mock exams yet.</span>
               <Link
                 href="/dashboard/mock-exam"
                 className="px-3.5 py-1.5 bg-primary/10 border border-primary/20 text-primary rounded-xl font-bold uppercase tracking-wider hover:bg-primary hover:text-white transition-all text-[10px]"

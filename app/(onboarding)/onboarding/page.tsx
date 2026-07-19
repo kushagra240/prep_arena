@@ -224,7 +224,7 @@ export default function OnboardingPage() {
                 Welcome to PrepArena, {user?.firstName || 'Scholar'}! 🎉
               </h2>
               <p className="font-space text-xs text-textSecondary max-w-sm mx-auto">
-                Your LeetCode-style training ground for Class 10 ICSE Board Exams. Let's get onboarded.
+                Your LeetCode-style training ground for Class 10 ICSE Board Exams. Let&apos;s get onboarded.
               </p>
             </div>
 
@@ -412,7 +412,7 @@ export default function OnboardingPage() {
           >
             <div className="space-y-1 text-center sm:text-left">
               <h2 className="font-space text-xl font-black text-white uppercase">Which subjects do you want to ace? 🎯</h2>
-              <p className="font-space text-xs text-textSecondary">Pick up to 5 — we'll prioritize these in your dashboard.</p>
+              <p className="font-space text-xs text-textSecondary">Pick up to 5 — we&apos;ll prioritize these in your dashboard.</p>
             </div>
 
             {/* Subject Grid */}
