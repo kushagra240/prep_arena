@@ -54,7 +54,7 @@ Explain the underlying concept in plain language a 15-year-old would understand.
 ## 🔢 Step-by-Step Solution
 Walk through exactly how to arrive at the correct answer, step by step.
 
-\${problemType === 'mcq' ? \`## ❌ Why Other Options Were Wrong\\nExplain the trap or misconception in each incorrect option.\\n\` : ''}
+${problemType === 'mcq' ? `## ❌ Why Other Options Were Wrong\nExplain the trap or misconception in each incorrect option.\n` : ''}
 
 ## 📝 ICSE Exam Tip
 What examiners specifically look for in this topic. Include keywords that must appear in answers.

@@ -604,9 +604,9 @@ export const clientDb = {
       } else if (ach.condition_type === 'subject_solved_count') {
         // Map target slugs
         let targetSubjectId = '';
-        if (ach.slug === 'physics-prodigy') targetSubjectId = 'sub-physics';
-        else if (ach.slug === 'chemistry-whiz') targetSubjectId = 'sub-chem';
-        else if (ach.slug === 'computer-applications') targetSubjectId = 'sub-computer';
+        if (ach.slug === 'physics-prodigy') targetSubjectId = 'sub-phy';
+        else if (ach.slug === 'chemistry-whiz') targetSubjectId = 'sub-che';
+        else if (ach.slug === 'computer-applications') targetSubjectId = 'sub-comp';
         else if (ach.slug === 'english-scholar') targetSubjectId = 'sub-englit';
 
         const solvedCountForSubject = newSubmissions.filter(s => {
