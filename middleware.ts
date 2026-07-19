@@ -13,10 +13,10 @@ const isProtectedRoute = createRouteMatcher([
 
 export default clerkMiddleware(async (auth, req) => {
   if (isProtectedRoute(req)) {
-    const authObj = (await auth()) as any;
     // Protect the route
-    authObj.protect();
+    await auth.protect();
 
+    const authObj = await auth();
     // Check if onboarded
     const sessionClaims = authObj.sessionClaims;
     // Clerk session claims metadata is typed as CustomFlowMetadata in some contexts, but can be retrieved via metadata or publicMetadata
