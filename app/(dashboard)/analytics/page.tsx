@@ -519,7 +519,7 @@ export default function AnalyticsPage() {
                 {mockTrendData.slice(-3).reverse().map((exam, idx) => (
                   <Link
                     key={idx}
-                    href={`/dashboard/mock-exam/results?id=${exam.id}`}
+                    href={`/dashboard/mock-exam/results/${exam.id}`}
                     className="flex justify-between items-center p-2 rounded-lg border border-borderColor/40 bg-bgPrimary/10 hover:bg-bgTertiary/30 hover:border-primary/50 transition-all"
                   >
                     <div className="min-w-0 pr-2">

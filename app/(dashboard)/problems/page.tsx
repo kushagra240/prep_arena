@@ -1,6 +1,4 @@
-'use client';
-
-import React from 'react';
+import React, { Suspense } from 'react';
 import { ProblemList } from '@/components/problems/ProblemList';
 import { Sparkles } from 'lucide-react';
 
@@ -22,7 +20,9 @@ export default function ProblemsPage() {
       </div>
 
       {/* Embedded Filters and Table Grid */}
-      <ProblemList />
+      <Suspense fallback={<div className="font-space text-xs text-textMuted uppercase font-bold animate-pulse">Loading problem engine...</div>}>
+        <ProblemList />
+      </Suspense>
     </div>
   );
 }

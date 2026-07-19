@@ -7,6 +7,8 @@ export interface ProblemFilter {
   problemType?: 'mcq' | 'brief_writing';
   status?: 'all' | 'solved' | 'unsolved' | 'attempted';
   searchQuery?: string;
+  chapterIds?: string[];
+  chapterName?: string;
 }
 
 export function useProblems() {
@@ -47,6 +49,17 @@ export function useProblems() {
         const matchesTags = problem.tags.some(t => t.toLowerCase().includes(query));
         
         if (!matchesTitle && !matchesText && !matchesTags) return false;
+      }
+
+      // 6. Chapter IDs filter
+      if (filter.chapterIds && filter.chapterIds.length > 0 && !filter.chapterIds.includes(problem.chapter_id)) {
+        return false;
+      }
+
+      // 7. Chapter Name filter
+      if (filter.chapterName) {
+        const chapter = chapters.find(c => c.name.toLowerCase() === filter.chapterName?.toLowerCase());
+        if (!chapter || problem.chapter_id !== chapter.id) return false;
       }
 
       return true;

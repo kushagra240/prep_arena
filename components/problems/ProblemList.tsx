@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { useProblems, ProblemFilter } from '@/lib/hooks/useProblems';
 import { ProblemCard } from './ProblemCard';
 import { Search, Filter, RefreshCw, XCircle } from 'lucide-react';
 
 export function ProblemList() {
   const { getFilteredProblems, subjects } = useProblems();
+  const searchParams = useSearchParams();
 
   // Filters state
   const [filterState, setFilterState] = useState<ProblemFilter>({
@@ -12,8 +16,26 @@ export function ProblemList() {
     difficulty: undefined,
     problemType: undefined,
     status: 'all',
-    searchQuery: ''
+    searchQuery: '',
+    chapterIds: [],
+    chapterName: ''
   });
+
+  // Sync parameters from URL on mount
+  useEffect(() => {
+    const subjectParam = searchParams.get('subject');
+    const chaptersParam = searchParams.get('chapters');
+    const chapterNameParam = searchParams.get('chapter');
+
+    if (subjectParam || chaptersParam || chapterNameParam) {
+      setFilterState(prev => ({
+        ...prev,
+        subjectSlug: subjectParam || prev.subjectSlug,
+        chapterIds: chaptersParam ? chaptersParam.split(',') : prev.chapterIds,
+        chapterName: chapterNameParam || prev.chapterName
+      }));
+    }
+  }, [searchParams]);
 
   const filteredProblems = getFilteredProblems(filterState);
 
@@ -23,7 +45,9 @@ export function ProblemList() {
       difficulty: undefined,
       problemType: undefined,
       status: 'all',
-      searchQuery: ''
+      searchQuery: '',
+      chapterIds: [],
+      chapterName: ''
     });
   };
 
