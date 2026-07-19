@@ -23,7 +23,7 @@ export function ProblemList() {
 
   // Sync parameters from URL on mount
   useEffect(() => {
-    const subjectParam = searchParams.get('subject');
+    const subjectParam = searchParams.get('subject') || searchParams.get('subjectSlug');
     const chaptersParam = searchParams.get('chapters');
     const chapterNameParam = searchParams.get('chapter');
 
