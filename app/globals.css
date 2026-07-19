@@ -161,3 +161,41 @@
     linear-gradient(to right, rgba(31, 41, 77, 0.2) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(31, 41, 77, 0.2) 1px, transparent 1px);
 }
+
+/* Custom 3D Perspective Landing Mockup Animations */
+@keyframes mock-float-dark {
+  0%, 100% { 
+    transform: translate3d(15px, -25px, 0) rotateX(18deg) rotateY(-18deg) rotateZ(6deg) scale(0.95); 
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7), 0 0 30px rgba(79, 110, 247, 0.15);
+  }
+  50% { 
+    transform: translate3d(15px, -37px, 0) rotateX(18deg) rotateY(-18deg) rotateZ(6deg) scale(0.95); 
+    box-shadow: 0 35px 60px -10px rgba(0, 0, 0, 0.8), 0 0 45px rgba(79, 110, 247, 0.25);
+  }
+}
+@keyframes mock-float-light {
+  0%, 100% { 
+    transform: translate3d(-15px, 45px, 0) rotateX(18deg) rotateY(-18deg) rotateZ(6deg) scale(0.95); 
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  }
+  50% { 
+    transform: translate3d(-15px, 33px, 0) rotateX(18deg) rotateY(-18deg) rotateZ(6deg) scale(0.95); 
+    box-shadow: 0 35px 60px -10px rgba(0, 0, 0, 0.6);
+  }
+}
+
+.anim-mock-dark {
+  animation: mock-float-dark 6s ease-in-out infinite;
+  transform-style: preserve-3d;
+}
+
+.anim-mock-light {
+  animation: mock-float-light 6s ease-in-out infinite;
+  animation-delay: 1s;
+  transform-style: preserve-3d;
+}
+
+.text-neon-cyan {
+  text-shadow: 0 0 40px rgba(6, 182, 212, 0.4);
+}
+
