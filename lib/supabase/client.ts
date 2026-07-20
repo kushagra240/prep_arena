@@ -399,6 +399,7 @@ export const MOCK_PROBLEMS: Problem[] = [
     total_attempts: 2900,
     total_correct: 2340,
     xp_reward: 10,
+    created_at: new Date().toISOString(),
     is_active: true
   },
   // Biology - Cell Division - MCQ
