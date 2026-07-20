@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { usePrepArenaStore } from '@/lib/store';
 import { useLeaderboard } from '@/lib/hooks/useLeaderboard';
 import { CheckCircle2, Percent, Trophy, CalendarDays } from 'lucide-react';
@@ -52,12 +53,20 @@ export function StatsCards() {
 
   return (
     <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-      {stats.map((stat) => {
+      {stats.map((stat, idx) => {
         const Icon = stat.icon;
         return (
-          <div 
+          <motion.div 
             key={stat.name}
-            className={`rounded-2xl border bg-bgSecondary/40 p-4 sm:p-5 flex flex-col justify-between transition-all duration-300 hover:border-opacity-50 hover:-translate-y-0.5 ${stat.color.split(' ').slice(1).join(' ')}`}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              duration: 0.3,
+              delay: idx * 0.05,
+              ease: [0.16, 1, 0.3, 1]
+            }}
+            whileHover={{ y: -3 }}
+            className={`rounded-2xl border bg-bgSecondary/40 p-4 sm:p-5 flex flex-col justify-between transition-colors duration-200 hover-sheen ${stat.color.split(' ').slice(1).join(' ')}`}
           >
             <div className="flex items-center justify-between mb-2">
               <span className="font-space text-[10px] sm:text-xs font-bold text-textSecondary uppercase tracking-wider">{stat.name}</span>
@@ -72,7 +81,7 @@ export function StatsCards() {
                 {stat.subText}
               </p>
             </div>
-          </div>
+          </motion.div>
         );
       })}
     </div>

@@ -1,11 +1,12 @@
 import React from 'react';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 import { SubjectBadge } from '../shared/SubjectBadge';
 import { DifficultyBadge } from '../shared/DifficultyBadge';
 import { XPCounter } from '../shared/XPCounter';
 import { Problem } from '@/lib/supabase/types';
 import { usePrepArenaStore } from '@/lib/store';
-import { CheckCircle2, CircleDot, HelpCircle, FileText, ClipboardList } from 'lucide-react';
+import { CheckCircle2, CircleDot, FileText, ClipboardList } from 'lucide-react';
 
 interface ProblemCardProps {
   problem: Problem;
@@ -36,16 +37,26 @@ export function ProblemCard({ problem, index }: ProblemCardProps) {
     : 75;
 
   return (
-    <div className="glass-panel-hover flex flex-col sm:flex-row sm:items-center justify-between rounded-xl border border-borderColor bg-bgSecondary/40 p-4 sm:p-5 gap-4">
+    <motion.div
+      initial={{ opacity: 0, y: 14 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{
+        duration: 0.35,
+        delay: Math.min(index * 0.03, 0.4),
+        ease: [0.16, 1, 0.3, 1],
+      }}
+      whileHover={{ y: -2 }}
+      className="glass-panel-hover hover-sheen flex flex-col sm:flex-row sm:items-center justify-between rounded-xl border border-borderColor bg-bgSecondary/40 p-4 sm:p-5 gap-4 transition-shadow"
+    >
       {/* Title + Index + Status */}
       <div className="flex items-start gap-3">
         <span className="mt-1 shrink-0">
           {status === 'solved' ? (
-            <CheckCircle2 className="h-5 w-5 text-correct fill-correct/10" />
+            <CheckCircle2 className="h-5 w-5 text-correct fill-correct/10 animate-scale-in" />
           ) : status === 'attempted' ? (
-            <CircleDot className="h-5 w-5 text-amberGold" />
+            <CircleDot className="h-5 w-5 text-amberGold animate-pulse-glow" />
           ) : (
-            <span className="block h-5 w-5 rounded-full border border-borderColor bg-bgPrimary"></span>
+            <span className="block h-5 w-5 rounded-full border border-borderColor bg-bgPrimary transition-colors hover:border-primary/50"></span>
           )}
         </span>
         
@@ -54,7 +65,7 @@ export function ProblemCard({ problem, index }: ProblemCardProps) {
             <span className="font-mono text-xs text-textMuted font-bold">#{index}</span>
             <Link 
               href={`/problems/${problem.slug}`}
-              className="font-space text-sm font-bold text-white hover:text-primary hover:underline transition-all"
+              className="font-space text-sm font-bold text-white hover:text-primary transition-colors"
             >
               {problem.title}
             </Link>
@@ -103,6 +114,6 @@ export function ProblemCard({ problem, index }: ProblemCardProps) {
         {/* XP counter */}
         <XPCounter xp={problem.xp_reward} size="sm" />
       </div>
-    </div>
+    </motion.div>
   );
 }

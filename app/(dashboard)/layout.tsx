@@ -1,6 +1,8 @@
 'use client';
 
 import React, { useEffect } from 'react';
+import { usePathname } from 'next/navigation';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Sidebar } from '@/components/layout/Sidebar';
 import { TopBar } from '@/components/layout/TopBar';
 import { MobileBottomNav } from '@/components/layout/MobileBottomNav';
@@ -13,6 +15,7 @@ export default function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const pathname = usePathname();
   const refreshState = usePrepArenaStore((state) => state.refreshState);
 
   // Sync initial client state on mount
@@ -30,10 +33,22 @@ export default function DashboardLayout({
         {/* TopBar - Header */}
         <TopBar />
 
-        {/* Dynamic page contents */}
-        <main className="flex-1 p-4 sm:p-6 md:p-8 max-w-7xl w-full mx-auto animate-fade-in">
-          {children}
-        </main>
+        {/* Dynamic page contents with Framer Motion transitions */}
+        <AnimatePresence mode="wait">
+          <motion.main
+            key={pathname}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{
+              duration: 0.25,
+              ease: [0.16, 1, 0.3, 1],
+            }}
+            className="flex-1 p-4 sm:p-6 md:p-8 max-w-7xl w-full mx-auto"
+          >
+            {children}
+          </motion.main>
+        </AnimatePresence>
       </div>
 
       {/* Floating Grimoire Reference Formula Drawer */}

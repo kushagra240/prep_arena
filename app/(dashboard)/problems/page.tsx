@@ -20,7 +20,16 @@ export default function ProblemsPage() {
       </div>
 
       {/* Embedded Filters and Table Grid */}
-      <Suspense fallback={<div className="font-space text-xs text-textMuted uppercase font-bold animate-pulse">Loading problem engine...</div>}>
+      <Suspense fallback={
+        <div className="space-y-4">
+          <div className="h-12 w-full rounded-xl bg-bgSecondary/60 animate-shimmer border border-borderColor/50" />
+          <div className="space-y-3">
+            {[1, 2, 3, 4, 5].map((i) => (
+              <div key={i} className="h-20 w-full rounded-xl bg-bgSecondary/40 animate-shimmer border border-borderColor/40" />
+            ))}
+          </div>
+        </div>
+      }>
         <ProblemList />
       </Suspense>
     </div>

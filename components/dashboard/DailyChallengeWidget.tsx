@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import { usePrepArenaStore } from '@/lib/store';
 import { SubjectBadge } from '@/components/shared/SubjectBadge';
 import { DifficultyBadge } from '@/components/shared/DifficultyBadge';
@@ -66,10 +67,10 @@ export function DailyChallengeWidget() {
 
   if (loading) {
     return (
-      <div className="rounded-2xl border border-borderColor bg-bgSecondary/40 p-5 space-y-4 animate-pulse">
-        <div className="h-4 bg-borderColor rounded w-1/3"></div>
-        <div className="h-6 bg-borderColor rounded w-3/4"></div>
-        <div className="h-12 bg-borderColor rounded"></div>
+      <div className="rounded-2xl border border-borderColor bg-bgSecondary/40 p-5 space-y-4 animate-shimmer">
+        <div className="h-4 bg-borderColor/50 rounded w-1/3"></div>
+        <div className="h-6 bg-borderColor/50 rounded w-3/4"></div>
+        <div className="h-12 bg-borderColor/50 rounded"></div>
       </div>
     );
   }
@@ -83,11 +84,16 @@ export function DailyChallengeWidget() {
   const doubledXP = baseXP * 2;
 
   return (
-    <div className={`relative overflow-hidden rounded-2xl border transition-all duration-300 p-5 shadow-glow ${
-      isSolvedToday 
-        ? 'border-correct/30 bg-gradient-to-b from-bgSecondary to-correct/5 shadow-correctGlow' 
-        : 'border-amberGold/30 bg-gradient-to-b from-bgSecondary to-amberGold/5 shadow-amberGlow'
-    }`}>
+    <motion.div
+      initial={{ opacity: 0, scale: 0.98 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+      className={`relative overflow-hidden rounded-2xl border transition-all duration-300 p-5 shadow-glow hover-sheen ${
+        isSolvedToday 
+          ? 'border-correct/30 bg-gradient-to-b from-bgSecondary to-correct/5 shadow-correctGlow' 
+          : 'border-amberGold/30 bg-gradient-to-b from-bgSecondary to-amberGold/5 shadow-amberGlow'
+      }`}
+    >
       {/* Badge Top Right */}
       <div className="absolute top-0 right-0 flex items-center">
         <div className={`rounded-bl-xl border-l border-b px-3 py-1 font-space text-[9px] font-extrabold uppercase tracking-widest ${
@@ -131,7 +137,7 @@ export function DailyChallengeWidget() {
 
           {/* Reset Timer */}
           <div className="flex items-center gap-1 font-space text-[10px] text-textMuted bg-bgPrimary/60 border border-borderColor/45 px-2.5 py-1 rounded-lg">
-            <Timer size={11} className="animate-spin-slow text-textSecondary" />
+            <Timer size={11} className="text-textSecondary" />
             <span>{timeLeft}</span>
           </div>
 
@@ -144,13 +150,13 @@ export function DailyChallengeWidget() {
           ) : (
             <Link 
               href={`/problems/${problem.slug}`}
-              className="rounded-xl bg-amberGold text-bgPrimary hover:bg-amber-500 hover:shadow-[0_0_15px_rgba(245,158,11,0.3)] px-4 py-2 font-space text-xs font-black uppercase tracking-wider transition-all duration-300 hover:-translate-y-0.5"
+              className="rounded-xl bg-amberGold text-bgPrimary hover:bg-amber-500 hover:shadow-[0_0_15px_rgba(245,158,11,0.3)] px-4 py-2 font-space text-xs font-black uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
             >
               Solve Now →
             </Link>
           )}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
