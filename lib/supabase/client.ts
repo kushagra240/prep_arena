@@ -1138,8 +1138,16 @@ export const clientDb = {
     return chapters.map((ch: any) => {
       if (!ch.topics) {
         if (ch.id === 'ch-math-1') ch.topics = ['GST on goods/services', 'Maturity value of RD', 'Shares & Dividends yield'];
+        else if (ch.id === 'ch-math-3') ch.topics = ['Matrix order & elements', 'Matrix addition & subtraction', 'Matrix multiplication compatibilities', 'Solving matrix equations'];
+        else if (ch.id === 'ch-math-4') ch.topics = ['Trigonometric identities proof', 'Angle of elevation & depression', 'Heights & distances word problems'];
         else if (ch.id === 'ch-phy-1') ch.topics = ['Turning effect of force', 'Center of gravity', 'Uniform circular motion'];
+        else if (ch.id === 'ch-phy-3') ch.topics = ['Sound reflection & Echoes', 'Echo minimum distance calculations', 'Natural, forced and resonant vibrations'];
         else if (ch.id === 'ch-che-1') ch.topics = ['Periodic trends', 'Ionization potential', 'Electronegativity'];
+        else if (ch.id === 'ch-che-3') ch.topics = ['pH scale significance', 'Acids, bases properties', 'Salt preparation methods', 'Thermal decomposition of salts'];
+        else if (ch.id === 'ch-bio-3') ch.topics = ['Light reaction & Photolysis', 'Dark reaction & Carbon fixation', 'Photosynthesis limiting factors'];
+        else if (ch.id === 'ch-comp-3') ch.topics = ['String class methods', 'Substring & concatenation', 'Comparing Strings', 'Character wrapper checks'];
+        else if (ch.id === 'ch-his-2') ch.topics = ['Doctrine of Lapse', 'Annexation of Awadh', 'Immediate cause & cartridge incident', 'Consequences of the Revolt'];
+        else if (ch.id === 'ch-geo-2') ch.topics = ['Soil erosion & conservation', 'Laterite soil leaching process', 'Black soil moisture retention', 'Alluvial soil composition'];
         else ch.topics = ['Introduction & Basics', 'Key concepts', 'Example applications'];
       }
       return ch;
