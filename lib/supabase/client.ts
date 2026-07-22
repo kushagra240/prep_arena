@@ -63,9 +63,27 @@ export const MOCK_CHAPTERS: Chapter[] = [
 
   // History & Civics
   { id: 'ch-his-1', subject_id: 'sub-his', name: 'Civics: The Union Legislature', description: 'Lok Sabha, Rajya Sabha functions and powers.', order_index: 1, syllabus_reference: 'ICSE-HIS-01', created_at: new Date().toISOString() },
+  { id: 'ch-his-2', subject_id: 'sub-his', name: 'History: First War of Independence (1857)', description: 'Causes, events, and consequences of the Great Revolt of 1857.', order_index: 2, syllabus_reference: 'ICSE-HIS-02', created_at: new Date().toISOString() },
 
   // Geography
-  { id: 'ch-geo-1', subject_id: 'sub-geo', name: 'Climate of India', description: 'Monsoon mechanisms and regional climate details.', order_index: 2, syllabus_reference: 'ICSE-GEO-02', created_at: new Date().toISOString() }
+  { id: 'ch-geo-1', subject_id: 'sub-geo', name: 'Climate of India', description: 'Monsoon mechanisms and regional climate details.', order_index: 2, syllabus_reference: 'ICSE-GEO-02', created_at: new Date().toISOString() },
+  { id: 'ch-geo-2', subject_id: 'sub-geo', name: 'Soils of India', description: 'Alluvial, Black, Red, and Laterite soils - formation, characteristics, and distribution.', order_index: 3, syllabus_reference: 'ICSE-GEO-03', created_at: new Date().toISOString() },
+
+  // Mathematics New Chapters
+  { id: 'ch-math-3', subject_id: 'sub-math', name: 'Algebra: Matrices', description: 'Types of matrices, addition, subtraction, multiplication, and solving matrix equations.', order_index: 5, syllabus_reference: 'ICSE-MAT-05', created_at: new Date().toISOString() },
+  { id: 'ch-math-4', subject_id: 'sub-math', name: 'Trigonometry: Identities and Heights & Distances', description: 'Proving trigonometric identities and solving heights and distances word problems.', order_index: 10, syllabus_reference: 'ICSE-MAT-10', created_at: new Date().toISOString() },
+
+  // Physics New Chapters
+  { id: 'ch-phy-3', subject_id: 'sub-phy', name: 'Sound', description: 'Reflection of sound waves, echoes, free, forced, and resonant vibrations.', order_index: 6, syllabus_reference: 'ICSE-PHY-06', created_at: new Date().toISOString() },
+
+  // Chemistry New Chapters
+  { id: 'ch-che-3', subject_id: 'sub-che', name: 'Acids, Bases & Salts', description: 'pH scale, properties of acids/bases, preparation and properties of salts.', order_index: 3, syllabus_reference: 'ICSE-CHE-03', created_at: new Date().toISOString() },
+
+  // Biology New Chapters
+  { id: 'ch-bio-3', subject_id: 'sub-bio', name: 'Photosynthesis', description: 'Mechanism of photosynthesis, light and dark phases, and factors affecting it.', order_index: 5, syllabus_reference: 'ICSE-BIO-05', created_at: new Date().toISOString() },
+
+  // Computer Applications New Chapters
+  { id: 'ch-comp-3', subject_id: 'sub-comp', name: 'String Handling in Java', description: 'String class methods, string comparisons, and character extraction manipulation.', order_index: 8, syllabus_reference: 'ICSE-COM-08', created_at: new Date().toISOString() }
 ];
 
 export const MOCK_PROBLEMS: Problem[] = [
