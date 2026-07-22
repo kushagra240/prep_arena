@@ -64,7 +64,7 @@ export function ProblemList() {
               placeholder="Search problems by name, keywords, or board year (e.g., '#board-2023')..."
               value={filterState.searchQuery}
               onChange={(e) => setFilterState(prev => ({ ...prev, searchQuery: e.target.value }))}
-              className="w-full rounded-xl border border-borderColor bg-bgPrimary/60 py-2.5 pl-11 pr-4 font-space text-sm text-white placeholder-textMuted focus:border-primary focus:outline-none transition-all duration-300"
+              className="w-full rounded-xl border border-borderColor bg-bgPrimary/60 py-2.5 pl-11 pr-4 font-space text-sm text-white placeholder-textMuted focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/40 focus:shadow-[0_0_15px_rgba(79,110,247,0.15)] transition-all duration-300"
             />
           </div>
           
@@ -88,7 +88,7 @@ export function ProblemList() {
             <select
               value={filterState.subjectSlug || ''}
               onChange={(e) => setFilterState(prev => ({ ...prev, subjectSlug: e.target.value || undefined }))}
-              className="w-full rounded-xl border border-borderColor bg-bgPrimary/60 p-2.5 font-space text-xs text-white focus:border-primary focus:outline-none transition-all cursor-pointer"
+              className="w-full rounded-xl border border-borderColor bg-bgPrimary/60 p-2.5 font-space text-xs text-white focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/40 focus:shadow-[0_0_15px_rgba(79,110,247,0.15)] transition-all cursor-pointer"
             >
               <option value="">All Subjects</option>
               {subjects.map((sub) => (
@@ -103,7 +103,7 @@ export function ProblemList() {
             <select
               value={filterState.difficulty || ''}
               onChange={(e) => setFilterState(prev => ({ ...prev, difficulty: (e.target.value as any) || undefined }))}
-              className="w-full rounded-xl border border-borderColor bg-bgPrimary/60 p-2.5 font-space text-xs text-white focus:border-primary focus:outline-none transition-all cursor-pointer"
+              className="w-full rounded-xl border border-borderColor bg-bgPrimary/60 p-2.5 font-space text-xs text-white focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/40 focus:shadow-[0_0_15px_rgba(79,110,247,0.15)] transition-all cursor-pointer"
             >
               <option value="">All Difficulties</option>
               <option value="easy">🟢 Easy</option>
@@ -118,7 +118,7 @@ export function ProblemList() {
             <select
               value={filterState.problemType || ''}
               onChange={(e) => setFilterState(prev => ({ ...prev, problemType: (e.target.value as any) || undefined }))}
-              className="w-full rounded-xl border border-borderColor bg-bgPrimary/60 p-2.5 font-space text-xs text-white focus:border-primary focus:outline-none transition-all cursor-pointer"
+              className="w-full rounded-xl border border-borderColor bg-bgPrimary/60 p-2.5 font-space text-xs text-white focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/40 focus:shadow-[0_0_15px_rgba(79,110,247,0.15)] transition-all cursor-pointer"
             >
               <option value="">All Types</option>
               <option value="mcq">📋 MCQ</option>
@@ -132,7 +132,7 @@ export function ProblemList() {
             <select
               value={filterState.status || 'all'}
               onChange={(e) => setFilterState(prev => ({ ...prev, status: (e.target.value as any) || 'all' }))}
-              className="w-full rounded-xl border border-borderColor bg-bgPrimary/60 p-2.5 font-space text-xs text-white focus:border-primary focus:outline-none transition-all cursor-pointer"
+              className="w-full rounded-xl border border-borderColor bg-bgPrimary/60 p-2.5 font-space text-xs text-white focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/40 focus:shadow-[0_0_15px_rgba(79,110,247,0.15)] transition-all cursor-pointer"
             >
               <option value="all">All Statuses</option>
               <option value="solved">✅ Solved</option>

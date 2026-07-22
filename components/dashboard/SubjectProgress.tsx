@@ -52,7 +52,7 @@ export function SubjectProgress() {
             >
               {/* Circular Progress Ring */}
               <div className="relative h-14 w-14 flex items-center justify-center">
-                <svg className="absolute transform -rotate-90 w-full h-full">
+                <svg className="absolute transform -rotate-90 w-full h-full" viewBox="0 0 56 56">
                   {/* Background Track */}
                   <circle
                     cx="28"

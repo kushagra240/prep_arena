@@ -45,8 +45,9 @@ export function ProblemCard({ problem, index }: ProblemCardProps) {
         delay: Math.min(index * 0.03, 0.4),
         ease: [0.16, 1, 0.3, 1],
       }}
-      whileHover={{ y: -2 }}
-      className="glass-panel-hover hover-sheen flex flex-col sm:flex-row sm:items-center justify-between rounded-xl border border-borderColor bg-bgSecondary/40 p-4 sm:p-5 gap-4 transition-shadow"
+      whileHover={{ y: -4, scale: 1.006 }}
+      whileTap={{ scale: 0.994 }}
+      className="glass-panel-hover hover-sheen flex flex-col sm:flex-row sm:items-center justify-between rounded-xl border border-borderColor bg-bgSecondary/40 p-4 sm:p-5 gap-4 transition-all duration-300"
     >
       {/* Title + Index + Status */}
       <div className="flex items-start gap-3">
