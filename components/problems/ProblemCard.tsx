@@ -1,35 +1,22 @@
 import React from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import { memo } from 'react';
 import { SubjectBadge } from '../shared/SubjectBadge';
 import { DifficultyBadge } from '../shared/DifficultyBadge';
 import { XPCounter } from '../shared/XPCounter';
-import { Problem } from '@/lib/supabase/types';
-import { usePrepArenaStore } from '@/lib/store';
+import { Problem, Subject, Chapter } from '@/lib/supabase/types';
 import { CheckCircle2, CircleDot, FileText, ClipboardList } from 'lucide-react';
 
 interface ProblemCardProps {
   problem: Problem;
   index: number;
+  status: 'solved' | 'attempted' | 'unsolved';
+  subject?: Subject;
+  chapter?: Chapter;
 }
 
-export function ProblemCard({ problem, index }: ProblemCardProps) {
-  const submissions = usePrepArenaStore((state) => state.submissions);
-  const subjects = usePrepArenaStore((state) => state.subjects);
-  const chapters = usePrepArenaStore((state) => state.chapters);
-
-  const subject = subjects.find(s => s.id === problem.subject_id);
-  const chapter = chapters.find(c => c.id === problem.chapter_id);
-
-  // Solved status
-  const solvedSub = submissions.find(s => s.problem_id === problem.id && s.is_correct);
-  const attemptedSub = submissions.find(s => s.problem_id === problem.id);
-  
-  const status: 'solved' | 'attempted' | 'unsolved' = solvedSub 
-    ? 'solved' 
-    : attemptedSub 
-    ? 'attempted' 
-    : 'unsolved';
+export const ProblemCard = memo(function ProblemCard({ problem, index, status, subject, chapter }: ProblemCardProps) {
 
   // Calculate mock acceptance rate
   const acceptance = problem.total_attempts > 0 
