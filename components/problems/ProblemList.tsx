@@ -3,12 +3,30 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useProblems, ProblemFilter } from '@/lib/hooks/useProblems';
+import { usePrepArenaStore } from '@/lib/store';
 import { ProblemCard } from './ProblemCard';
 import { Search, Filter, RefreshCw, XCircle } from 'lucide-react';
 
 export function ProblemList() {
-  const { getFilteredProblems, subjects } = useProblems();
+  const { getFilteredProblems, subjects, chapters } = useProblems();
+  const submissions = usePrepArenaStore((state) => state.submissions);
   const searchParams = useSearchParams();
+
+  // Precompute lookups for children cards
+  const subjectMap = React.useMemo(() => new Map(subjects.map(s => [s.id, s])), [subjects]);
+  const chapterMap = React.useMemo(() => new Map(chapters.map(c => [c.id, c])), [chapters]);
+  const problemStatusMap = React.useMemo(() => {
+    const statusMap = new Map<string, 'solved' | 'attempted'>();
+    for (let i = submissions.length - 1; i >= 0; i--) {
+      const s = submissions[i];
+      if (s.is_correct) {
+        statusMap.set(s.problem_id, 'solved');
+      } else if (statusMap.get(s.problem_id) !== 'solved') {
+        statusMap.set(s.problem_id, 'attempted');
+      }
+    }
+    return statusMap;
+  }, [submissions]);
 
   // Filters state
   const [filterState, setFilterState] = useState<ProblemFilter>({
@@ -156,6 +174,9 @@ export function ProblemList() {
               key={problem.id} 
               problem={problem} 
               index={idx + 1} 
+              status={problemStatusMap.get(problem.id) || 'unsolved'}
+              subject={subjectMap.get(problem.subject_id)}
+              chapter={chapterMap.get(problem.chapter_id)}
             />
           ))}
         </div>
