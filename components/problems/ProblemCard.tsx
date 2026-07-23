@@ -104,4 +104,4 @@ export const ProblemCard = memo(function ProblemCard({ problem, index, status, s
       </div>
     </motion.div>
   );
-}
+});
