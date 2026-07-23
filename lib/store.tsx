@@ -28,6 +28,19 @@ interface PrepArenaState {
       timeTakenSeconds: number;
     }
   ) => { submission: Submission; xpEarned: number; achievementsUnlocked: Achievement[] };
+  submitAnswers: (
+    submissionsPayloads: {
+      problemId: string;
+      payload: {
+        selectedOptionId?: string;
+        answerText?: string;
+        isCorrect: boolean;
+        aiScore?: number;
+        aiFeedback?: string;
+        timeTakenSeconds: number;
+      };
+    }[]
+  ) => { submissions: Submission[]; xpEarned: number; achievementsUnlocked: Achievement[] };
   updateProfileDetails: (
     fullName: string, 
     school: string, 
@@ -140,6 +153,71 @@ export const usePrepArenaStore = create<PrepArenaState>((set, get) => ({
 
     return {
       submission: result.submission,
+      xpEarned: result.xpEarned,
+      achievementsUnlocked: result.achievementsUnlocked
+    };
+  },
+
+  submitAnswers: (submissionsPayloads) => {
+    set({ isLoading: true });
+    
+    // Process submissions via local db engine in batch
+    const result = clientDb.submitAnswers(submissionsPayloads);
+    
+    // Sync store with new storage values
+    set({
+      profile: result.newProfile,
+      submissions: clientDb.getSubmissions(),
+      userAchievements: clientDb.getUserAchievements(),
+      leaderboard: clientDb.getLeaderboard(),
+      isLoading: false
+    });
+
+    // Notify total XP gain once
+    if (result.xpEarned > 0) {
+      toast.success(`+${result.xpEarned} Total XP Earned!`, {
+        description: 'Mock exam grading complete. Keep practicing!',
+        duration: 4000
+      });
+    }
+
+    // Process achievement unlocks
+    if (result.achievementsUnlocked.length > 0) {
+      try {
+        confetti({
+          particleCount: 150,
+          spread: 90,
+          origin: { y: 0.6 }
+        });
+      } catch (err) {
+        console.warn('Confetti error:', err);
+      }
+
+      result.achievementsUnlocked.forEach((ach) => {
+        toast.custom(() => (
+          <div className="bg-bgSecondary border border-primary/40 rounded-2xl p-4 shadow-glow flex items-center gap-4 max-w-sm w-full animate-in fade-in slide-in-from-bottom-4 duration-300">
+            <div className="h-12 w-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center text-2xl shrink-0">
+              {ach.icon}
+            </div>
+            <div className="flex-1 min-w-0">
+              <span className="block font-space text-[9px] font-extrabold text-primary uppercase tracking-wider">
+                Achievement Unlocked!
+              </span>
+              <h4 className="font-space text-xs font-black text-white truncate">{ach.name}</h4>
+              <p className="font-space text-[10px] text-textMuted leading-snug mt-0.5">{ach.description}</p>
+            </div>
+            <div className="shrink-0 text-right">
+              <span className="font-space text-[10px] font-black text-correct bg-correct/10 border border-correct/20 px-2 py-0.5 rounded">
+                +{ach.xp_bonus} XP
+              </span>
+            </div>
+          </div>
+        ), { duration: 6000 });
+      });
+    }
+
+    return {
+      submissions: result.submissions,
       xpEarned: result.xpEarned,
       achievementsUnlocked: result.achievementsUnlocked
     };
