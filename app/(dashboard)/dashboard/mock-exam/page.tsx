@@ -181,6 +181,18 @@ export default function MockExamPage() {
     let totalScored = 0;
     let totalMax = 0;
 
+    const batchPayloads: {
+      problemId: string;
+      payload: {
+        selectedOptionId?: string;
+        answerText?: string;
+        isCorrect: boolean;
+        aiScore?: number;
+        aiFeedback?: string;
+        timeTakenSeconds: number;
+      };
+    }[] = [];
+
     activeProblems.forEach(prob => {
       const ans = answers[prob.id];
       let score = 0;
@@ -213,16 +225,21 @@ export default function MockExamPage() {
         is_correct: isCorrect
       };
 
-      // Add actual submissions history inside local storage using standard store method
-      // (This updates user XP, streak details, unlocks achievements etc.)
-      usePrepArenaStore.getState().submitAnswer(prob.id, {
-        selectedOptionId: ans?.optionId,
-        answerText: ans?.text,
-        isCorrect,
-        aiScore: prob.problem_type === 'brief_writing' ? score : undefined,
-        timeTakenSeconds: Math.round((duration * 60 - timeLeft) / activeProblems.length)
+      batchPayloads.push({
+        problemId: prob.id,
+        payload: {
+          selectedOptionId: ans?.optionId,
+          answerText: ans?.text,
+          isCorrect,
+          aiScore: prob.problem_type === 'brief_writing' ? score : undefined,
+          timeTakenSeconds: Math.round((duration * 60 - timeLeft) / activeProblems.length)
+        }
       });
     });
+
+    // Add actual submissions history inside local storage using standard store method
+    // (This updates user XP, streak details, unlocks achievements etc.)
+    usePrepArenaStore.getState().submitAnswers(batchPayloads);
 
     const percentage = totalMax > 0 ? Math.round((totalScored / totalMax) * 100) : 0;
     const timeTaken = duration * 60 - timeLeft;
