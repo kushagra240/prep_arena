@@ -1,5 +1,6 @@
 import { usePrepArenaStore } from '../store';
 import { Problem } from '../supabase/types';
+import { useMemo, useCallback } from 'react';
 
 export interface ProblemFilter {
   subjectSlug?: string;
@@ -17,12 +18,38 @@ export function useProblems() {
   const chapters = usePrepArenaStore((state) => state.chapters);
   const submissions = usePrepArenaStore((state) => state.submissions);
 
-  const getFilteredProblems = (filter: ProblemFilter): Problem[] => {
+  // Precompute solvedStatusMap for O(1) lookups
+  const solvedStatusMap = useMemo(() => {
+    const statusMap = new Map<string, 'solved' | 'attempted'>();
+    for (let i = submissions.length - 1; i >= 0; i--) {
+      const s = submissions[i];
+      if (s.is_correct) {
+        statusMap.set(s.problem_id, 'solved');
+      } else if (statusMap.get(s.problem_id) !== 'solved') {
+        statusMap.set(s.problem_id, 'attempted');
+      }
+    }
+    return statusMap;
+  }, [submissions]);
+
+  const getFilteredProblems = useCallback((filter: ProblemFilter): Problem[] => {
+    // Cache subject ID and chapter ID lookup outside the filter loop
+    let filterSubjectId: string | undefined = undefined;
+    if (filter.subjectSlug) {
+      const subject = subjects.find(s => s.slug === filter.subjectSlug);
+      filterSubjectId = subject?.id;
+    }
+
+    let filterChapterId: string | undefined = undefined;
+    if (filter.chapterName) {
+      const chapter = chapters.find(c => c.name.toLowerCase() === filter.chapterName?.toLowerCase());
+      filterChapterId = chapter?.id;
+    }
+
     return problems.filter((problem) => {
       // 1. Subject filter
       if (filter.subjectSlug) {
-        const subject = subjects.find(s => s.slug === filter.subjectSlug);
-        if (!subject || problem.subject_id !== subject.id) return false;
+        if (!filterSubjectId || problem.subject_id !== filterSubjectId) return false;
       }
 
       // 2. Difficulty filter
@@ -33,12 +60,11 @@ export function useProblems() {
 
       // 4. Status filter
       if (filter.status && filter.status !== 'all') {
-        const userSolved = submissions.some(s => s.problem_id === problem.id && s.is_correct);
-        const userAttempted = submissions.some(s => s.problem_id === problem.id);
+        const currentStatus = solvedStatusMap.get(problem.id) || 'unsolved';
 
-        if (filter.status === 'solved' && !userSolved) return false;
-        if (filter.status === 'unsolved' && userSolved) return false;
-        if (filter.status === 'attempted' && !userAttempted) return false;
+        if (filter.status === 'solved' && currentStatus !== 'solved') return false;
+        if (filter.status === 'unsolved' && currentStatus === 'solved') return false;
+        if (filter.status === 'attempted' && currentStatus === 'unsolved') return false;
       }
 
       // 5. Search query filter
@@ -58,23 +84,16 @@ export function useProblems() {
 
       // 7. Chapter Name filter
       if (filter.chapterName) {
-        const chapter = chapters.find(c => c.name.toLowerCase() === filter.chapterName?.toLowerCase());
-        if (!chapter || problem.chapter_id !== chapter.id) return false;
+        if (!filterChapterId || problem.chapter_id !== filterChapterId) return false;
       }
 
       return true;
     });
-  };
+  }, [problems, subjects, chapters, solvedStatusMap]);
 
-  const getSolvedStatus = (problemId: string): 'solved' | 'attempted' | 'unsolved' => {
-    const isSolved = submissions.some(s => s.problem_id === problemId && s.is_correct);
-    if (isSolved) return 'solved';
-    
-    const isAttempted = submissions.some(s => s.problem_id === problemId);
-    if (isAttempted) return 'attempted';
-
-    return 'unsolved';
-  };
+  const getSolvedStatus = useCallback((problemId: string): 'solved' | 'attempted' | 'unsolved' => {
+    return solvedStatusMap.get(problemId) || 'unsolved';
+  }, [solvedStatusMap]);
 
   return {
     problems,

@@ -10,6 +10,15 @@ export function SubjectProgress() {
   const problems = usePrepArenaStore((state) => state.problems);
   const submissions = usePrepArenaStore((state) => state.submissions);
 
+  // Pre-calculate sets of attempted and solved problem IDs for O(1) lookup inside the loop
+  const attemptedProblemIds = React.useMemo(() => {
+    return new Set(submissions.map(s => s.problem_id));
+  }, [submissions]);
+
+  const solvedProblemIds = React.useMemo(() => {
+    return new Set(submissions.filter(s => s.is_correct).map(s => s.problem_id));
+  }, [submissions]);
+
   return (
     <div className="glass-panel rounded-2xl border border-borderColor bg-bgSecondary/40 p-5 shadow-glow space-y-4">
       <div className="flex items-center gap-2 border-b border-borderColor pb-3">
@@ -24,16 +33,10 @@ export function SubjectProgress() {
           const totalCount = subProblems.length || 3; // fallback if no problems yet
           
           // Count attempted problems in this subject
-          const attemptedProblems = subProblems.filter(p => 
-            submissions.some(s => s.problem_id === p.id)
-          );
-          const attemptedCount = attemptedProblems.length;
+          const attemptedCount = subProblems.filter(p => attemptedProblemIds.has(p.id)).length;
 
           // Solve count
-          const solvedSubProblems = subProblems.filter(p => 
-            submissions.some(s => s.problem_id === p.id && s.is_correct)
-          );
-          const solvedCount = solvedSubProblems.length;
+          const solvedCount = subProblems.filter(p => solvedProblemIds.has(p.id)).length;
 
           // Progress calculation: attempted vs total problems
           const progressPercentage = Math.min(100, Math.round((attemptedCount / totalCount) * 100)) || 0;
