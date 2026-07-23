@@ -1079,6 +1079,183 @@ export const clientDb = {
     return { submission, xpEarned, newProfile, achievementsUnlocked };
   },
 
+  submitAnswers: (
+    submissionsPayloads: {
+      problemId: string;
+      payload: {
+        selectedOptionId?: string;
+        answerText?: string;
+        isCorrect: boolean;
+        aiScore?: number;
+        aiFeedback?: string;
+        timeTakenSeconds: number;
+      };
+    }[]
+  ): {
+    submissions: Submission[];
+    xpEarned: number;
+    newProfile: Profile;
+    achievementsUnlocked: Achievement[];
+  } => {
+    const profile = clientDb.getProfile();
+    const submissions = clientDb.getSubmissions();
+    const userAchievements = clientDb.getUserAchievements();
+
+    let totalXpEarned = 0;
+    const newSubmissionsList: Submission[] = [];
+    
+    // We will build a set of already solved problem IDs before this batch, to check firstTime solves correctly
+    const solvedBeforeSet = new Set(
+      submissions.filter(s => s.is_correct).map(s => s.problem_id)
+    );
+
+    // Track newly solved problem IDs within this batch
+    const newlySolvedInBatch = new Set<string>();
+
+    for (const item of submissionsPayloads) {
+      const problem = MOCK_PROBLEMS.find(p => p.id === item.problemId);
+      if (!problem) continue;
+
+      let xpEarned = problem.xp_reward;
+      if (problem.problem_type === 'brief_writing' && item.payload.aiScore !== undefined) {
+        xpEarned = Math.round((problem.xp_reward * item.payload.aiScore) / 10);
+        if (item.payload.aiScore >= 9) xpEarned += 10;
+      } else if (problem.problem_type === 'mcq' && !item.payload.isCorrect) {
+        xpEarned = 0;
+      }
+
+      // Check if solved before or earlier in this batch
+      const isFirstTime = !solvedBeforeSet.has(item.problemId) && !newlySolvedInBatch.has(item.problemId);
+      if (isFirstTime && item.payload.isCorrect) {
+        xpEarned += 5;
+        newlySolvedInBatch.add(item.problemId);
+      }
+
+      const dailyChallengeId = typeof window !== 'undefined' ? localStorage.getItem('preparena_daily_challenge_id') : null;
+      const isDailyChallenge = item.problemId === dailyChallengeId;
+      const xpMultiplier = isDailyChallenge ? 2 : 1;
+      xpEarned = xpEarned * xpMultiplier;
+
+      totalXpEarned += xpEarned;
+
+      const submission: Submission = {
+        id: `sub-${Math.random().toString(36).substr(2, 9)}`,
+        user_id: profile.id,
+        problem_id: item.problemId,
+        answer_text: item.payload.answerText || null,
+        selected_option_id: item.payload.selectedOptionId || null,
+        is_correct: item.payload.isCorrect,
+        ai_score: item.payload.aiScore || null,
+        ai_feedback: item.payload.aiFeedback || null,
+        time_taken_seconds: item.payload.timeTakenSeconds,
+        xp_earned: xpEarned,
+        submitted_at: new Date().toISOString()
+      };
+      newSubmissionsList.push(submission);
+    }
+
+    // Combine old submissions with new ones
+    const combinedSubmissions = [...newSubmissionsList, ...submissions];
+    clientDb.saveSubmissions(combinedSubmissions);
+
+    // Update Profile Stats
+    const uniqueSolvedCount = new Set(
+      combinedSubmissions.filter(s => s.is_correct).map(s => s.problem_id)
+    ).size;
+
+    const uniqueAttemptedCount = new Set(
+      combinedSubmissions.map(s => s.problem_id)
+    ).size;
+
+    // Handle activity and streak
+    const todayStr = new Date().toISOString().split('T')[0];
+    let newStreak = profile.streak_days;
+    
+    if (profile.last_activity_date !== todayStr) {
+      const yesterday = new Date();
+      yesterday.setDate(yesterday.getDate() - 1);
+      const yesterdayStr = yesterday.toISOString().split('T')[0];
+
+      if (profile.last_activity_date === yesterdayStr) {
+        newStreak += 1;
+      } else {
+        newStreak = 1;
+      }
+    }
+
+    const newProfile: Profile = {
+      ...profile,
+      xp: profile.xp + totalXpEarned,
+      streak_days: newStreak,
+      last_activity_date: todayStr,
+      total_solved: uniqueSolvedCount,
+      total_attempted: uniqueAttemptedCount,
+      updated_at: new Date().toISOString()
+    };
+
+    clientDb.saveProfile(newProfile);
+
+    // Check achievements unlock
+    const achievementsUnlocked: Achievement[] = [];
+    MOCK_ACHIEVEMENTS.forEach(ach => {
+      const alreadyEarned = userAchievements.some(ua => ua.achievement_id === ach.id);
+      if (alreadyEarned) return;
+
+      let meetsCondition = false;
+      if (ach.condition_type === 'solved_mcq_count') {
+        const mcqSolved = combinedSubmissions.filter(s => {
+          const p = MOCK_PROBLEMS.find(prob => prob.id === s.problem_id);
+          return p && p.problem_type === 'mcq' && s.is_correct;
+        }).length;
+        meetsCondition = mcqSolved >= ach.condition_value;
+      } else if (ach.condition_type === 'solved_count') {
+        meetsCondition = uniqueSolvedCount >= ach.condition_value;
+      } else if (ach.condition_type === 'streak') {
+        meetsCondition = newStreak >= ach.condition_value;
+      } else if (ach.condition_type === 'subject_solved_count') {
+        let targetSubjectId = '';
+        if (ach.slug === 'physics-prodigy') targetSubjectId = 'sub-phy';
+        else if (ach.slug === 'chemistry-whiz') targetSubjectId = 'sub-che';
+        else if (ach.slug === 'computer-applications') targetSubjectId = 'sub-comp';
+        else if (ach.slug === 'english-scholar') targetSubjectId = 'sub-englit';
+        else if (ach.slug === 'biology-buff') targetSubjectId = 'sub-bio';
+
+        const solvedCountForSubject = combinedSubmissions.filter(s => {
+          const p = MOCK_PROBLEMS.find(prob => prob.id === s.problem_id);
+          if (!p || !s.is_correct) return false;
+          if (ach.slug === 'english-scholar') {
+            return p.subject_id === 'sub-englit' || p.subject_id === 'sub-englang';
+          }
+          return p.subject_id === targetSubjectId;
+        }).length;
+
+        meetsCondition = solvedCountForSubject >= ach.condition_value;
+      } else if (ach.condition_type === 'night_owl') {
+        const hours = new Date().getHours();
+        meetsCondition = hours >= 23 || hours <= 4;
+      }
+
+      if (meetsCondition) {
+        achievementsUnlocked.push(ach);
+        userAchievements.push({
+          id: `ua-${Math.random().toString(36).substr(2, 9)}`,
+          user_id: profile.id,
+          achievement_id: ach.id,
+          earned_at: new Date().toISOString()
+        });
+      }
+    });
+
+    if (achievementsUnlocked.length > 0) {
+      const bonusXP = achievementsUnlocked.reduce((sum, a) => sum + a.xp_bonus, 0);
+      newProfile.xp += bonusXP;
+      clientDb.saveProfile(newProfile);
+      clientDb.saveUserAchievements(userAchievements);
+    }
+
+    return { submissions: newSubmissionsList, xpEarned: totalXpEarned, newProfile, achievementsUnlocked };
+  },
+
   getLeaderboard: (): { rank: number; username: string; full_name: string; school: string; city: string; xp: number; total_solved: number; accuracy: number; streak_days: number; avatar_url: string }[] => {
     const profile = clientDb.getProfile();
     const submissions = clientDb.getSubmissions();
